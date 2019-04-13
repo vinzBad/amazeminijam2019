@@ -110,17 +110,19 @@ public class Character : Entity
     void wander()
     {
         walkingDirection = getWalkingDir(walkingDirection);
+		Debug.DrawLine(this.gameObject.transform.position, this.gameObject.transform.position + walkingDirection);
 
     }
 
     Vector3 getWalkingDir(Vector3 currentDirection)
     {
         // get current tile
-        var current = tileAtWorldPos(this.transform.position);
+        var current = this.tileAtWorldPos(this.gameObject.transform.position);
 
         // look to the left when we are walking to the left
         if (currentDirection.x <= 0)
         {
+			// Debug.Log("Walking to the left");
             var leftNeighbor = tileAtIndices(current.rowIndex, current.colIndex - 1);
             if (leftNeighbor != null)
             {
@@ -134,7 +136,7 @@ public class Character : Entity
                 }
                 else
                 {
-                    return Vector3.zero;
+                    return Vector3.left;
                 }
             }
             else
@@ -156,7 +158,7 @@ public class Character : Entity
                 }
                 else
                 {
-                    return Vector3.zero;
+                    return Vector3.right;
                 }
             }
             else
@@ -169,9 +171,10 @@ public class Character : Entity
 
     Tile tileAtWorldPos(Vector3 pos)
     {
+		//Debug.Log(pos);
         var rowIndex = (int)(Level.TILESIZE * Level.MAPHEIGHT - pos.y / Level.TILESIZE);
         var colIndex = (int)(pos.x / Level.TILESIZE);
-
+		// Debug.Log(rowIndex + ", " + colIndex);
         return tileAtIndices(rowIndex, colIndex);
     }
 
