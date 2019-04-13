@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class Entity : MonoBehaviour {
 
+    public Level level;
+
 	// Use this for initialization
 	void Start () {
 		this.init();
 	}
 
 	public virtual void init(){
-
+        this.level = GameObject.FindObjectOfType<Level>();
 	}
 	
 	// Update is called once per frame
