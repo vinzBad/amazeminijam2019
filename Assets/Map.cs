@@ -21,8 +21,8 @@ public class Map : Entity {
                 GameObject newTile = (GameObject)Instantiate(this.level.resources[0]);
                 newTile.transform.SetParent(this.gameObject.transform);
                 this.content[i, j] = newTile.GetComponent<Tile>();
-                this.content[i, j].x = i;
-                this.content[i, j].y = j;
+                this.content[i, j].rowIndex = i;
+                this.content[i, j].colIndex = j;
             }
         }
 
@@ -40,7 +40,7 @@ public class Map : Entity {
         {
             for (var j = 0; j < Level.MAPWIDTH; j++)
             {
-                if (this.content[i,j].x == coorX && this.content[i, j].y == coorY)
+                if (this.content[i,j].rowIndex == coorX && this.content[i, j].colIndex == coorY)
                 {
                     result = this.content[i, j];
                     break;

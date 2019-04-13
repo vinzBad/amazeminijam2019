@@ -13,8 +13,8 @@ public enum TileState
 public class Tile : Entity {
 	public TileState State = TileState.FREE;
 
-    public int x = 0;
-    public int y = 0;
+    public int rowIndex = 0;
+    public int colIndex = 0;
 
     // Use this for initialization
     public override void init(){
