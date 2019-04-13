@@ -23,6 +23,27 @@ public class Map : Entity {
 	
 	// Update is called once per frame
 	protected override void update(){
-		
+		debugDrawMap();
+	}
+
+	void OnDrawGizmos() {
+		debugDrawMap();
+	}
+
+	void debugDrawMap() {
+		var start = new Vector3();
+		var end = new Vector3();
+
+		// always skip the first line for better looks
+		for(int rowIndex = 1; rowIndex < Level.MAPHEIGHT; rowIndex++) {
+			start = new Vector3(0, rowIndex * Level.TILESIZE, 0);
+			end = new Vector3(Level.TILESIZE * Level.MAPWIDTH, rowIndex * Level.TILESIZE, 0);
+			Debug.DrawLine(start, end);
+		}
+		for(int colIndex = 1; colIndex < Level.MAPWIDTH; colIndex++) {
+			start = new Vector3(colIndex * Level.TILESIZE,0, 0);
+			end = new Vector3(colIndex * Level.TILESIZE, Level.MAPHEIGHT * Level.TILESIZE, 0);
+			Debug.DrawLine(start, end);
+		}
 	}
 }
