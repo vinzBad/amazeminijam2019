@@ -6,6 +6,7 @@ public class Map : Entity {
 
     public Camera mainCam;
     public GameObject floor;
+    public GameObject background;
 
     public Tile[,] content;
 
@@ -30,6 +31,8 @@ public class Map : Entity {
 
         this.floor.transform.position = new Vector3(0.0f, Level.TILESIZE, 0.0f);
         this.floor.transform.localScale = new Vector3(Level.TILESIZE * Level.MAPWIDTH, 1.0f, 1.0f);
+
+        this.background.transform.position = new Vector3(0.0f, Level.MAPHEIGHT / 2.0f, 0.0f);
 	}
 
     public Tile getTileAt(int coorX, int coorY)
