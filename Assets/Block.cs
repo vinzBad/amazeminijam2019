@@ -10,6 +10,8 @@ public class Block : Entity {
     public bool started = false;
     public bool landed = false;
 
+    public Tile currentTile = null;
+
 	// Use this for initialization
 	public override void init(){
         base.init();
@@ -36,11 +38,61 @@ public class Block : Entity {
         this.gameObject.transform.Rotate(new Vector3(0.0f, 0.0f, -90.0f), Space.World);
     }
 
+    public void moveLeft()
+    {
+        Tile tileOnLeft = this.level.map.getTileAt(this.x, this.y-1);
+        if (tileOnLeft != null && tileOnLeft.State == TileState.FREE && this.y > 0) {
+            if (this.currentTile != null)
+            {
+                this.currentTile.State = TileState.FREE;
+            }
+
+            this.y--;
+            this.gameObject.transform.position += Vector3.left * Level.TILESIZE;
+
+            Tile newTile = this.level.map.getTileAt(this.x, this.y);
+            if (newTile != null)
+            {
+                this.currentTile = newTile;
+                newTile.State = TileState.BLOCKED;
+            }
+        }
+    }
+
+    public void moveRight()
+    {
+        Tile tileOnRight = this.level.map.getTileAt(this.x, this.y+1);
+        if (tileOnRight != null && tileOnRight.State == TileState.FREE && this.y < Level.MAPWIDTH - 1)
+        {
+            if (this.currentTile != null)
+            {
+                this.currentTile.State = TileState.FREE;
+            }
+
+            this.y++;
+            this.gameObject.transform.position += Vector3.right * Level.TILESIZE;
+
+            Tile newTile = this.level.map.getTileAt(this.x, this.y);
+            if (newTile != null)
+            {
+                this.currentTile = newTile;
+                newTile.State = TileState.BLOCKED;
+            }
+        }
+    }
+
     public void land()
     {
         this.landed = true;
         this.level.activeBlock = null;
         this.level.spawnBlock(Random.Range(0, Level.MAPWIDTH));
+
+        Tile newTile = this.level.map.getTileAt(this.x, this.y);
+        if (newTile != null)
+        {
+            this.currentTile = newTile;
+            newTile.State = TileState.BLOCKED;
+        }
     }
 
     private IEnumerator updateMove()
@@ -53,10 +105,9 @@ public class Block : Entity {
         {
             if (!this.landed)
             {
-                Tile oldTile = this.level.map.getTileAt(this.x, this. y);
-                if (oldTile != null)
+                if (this.currentTile != null)
                 {
-                    oldTile.State = TileState.FREE;
+                    this.currentTile.State = TileState.FREE;
                 }
 
                 this.gameObject.transform.position += Vector3.down * Level.TILESIZE;
@@ -64,7 +115,7 @@ public class Block : Entity {
 
                 Tile newTile = this.level.map.getTileAt(this.x, this.y);
                 if (newTile != null) {
-                    Debug.Log("newTile: " + newTile.x);
+                    this.currentTile = newTile;
                     newTile.State = TileState.BLOCKED;
                 }
 
