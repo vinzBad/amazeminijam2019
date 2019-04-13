@@ -2,6 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum GameStatus
+{
+    Playing,
+    GameWon,
+    GameOver
+}
+
 public class Level : Entity
 {
     public static int MAPHEIGHT = 10;
@@ -11,9 +18,13 @@ public class Level : Entity
 
     public static float TILESIZE = 1.0f;
 
-    public static float TIMERMAXIMUM = 60.0f;//In seconds - reach goal before this time length
+    public static float TIMERMAXIMUM = 30.0f;//In seconds - reach goal before this time length
 
     public Object[] resources;
+
+    public GameStatus currentStatus = GameStatus.Playing;
+
+    public UI ui;
 
     public Map map;
     public List<Block> blocks = new List<Block>();
@@ -38,41 +49,52 @@ public class Level : Entity
     // Update is called once per frame
     protected override void update()
     {
-        this.timer -= Time.deltaTime;
-
-        if(this.activeBlock != null)
+        switch (this.currentStatus)
         {
-            if(Input.GetKeyDown(KeyCode.UpArrow))
-            {
-                
-            }
+            case GameStatus.Playing:
+                this.timer -= Time.deltaTime;
+                if (this.timer <= 0.0f)
+                {
+                    this.gameOver();
+                }
 
-            if (Input.GetKeyUp(KeyCode.DownArrow))
-            {
-                this.accelerate = false;
-            }
-            else if (Input.GetKeyDown(KeyCode.DownArrow))
-            {
-                this.accelerate = true;
-            }
+                if (this.activeBlock != null)
+                {
+                    if (Input.GetKeyDown(KeyCode.UpArrow))
+                    {
 
-            if (Input.GetKeyDown(KeyCode.LeftArrow))
-            {
-                this.activeBlock.moveLeft();
-            }
-            else if (Input.GetKeyDown(KeyCode.RightArrow))
-            {
-                this.activeBlock.moveRight();
-            }
+                    }
 
-            if (Input.GetKeyDown(KeyCode.LeftControl))
-            {
-                this.activeBlock.rotateLeft();
-            }
-            else if (Input.GetKeyDown(KeyCode.LeftAlt))
-            {
-                this.activeBlock.rotateRight();
-            }
+                    if (Input.GetKeyUp(KeyCode.DownArrow))
+                    {
+                        this.accelerate = false;
+                    }
+                    else if (Input.GetKeyDown(KeyCode.DownArrow))
+                    {
+                        this.accelerate = true;
+                    }
+
+                    if (Input.GetKeyDown(KeyCode.LeftArrow))
+                    {
+                        this.activeBlock.moveLeft();
+                    }
+                    else if (Input.GetKeyDown(KeyCode.RightArrow))
+                    {
+                        this.activeBlock.moveRight();
+                    }
+
+                    if (Input.GetKeyDown(KeyCode.LeftControl))
+                    {
+                        this.activeBlock.rotateLeft();
+                    }
+                    else if (Input.GetKeyDown(KeyCode.LeftAlt))
+                    {
+                        this.activeBlock.rotateRight();
+                    }
+                }
+                break;
+            case GameStatus.GameOver:
+                break;
         }
     }
 
@@ -87,5 +109,11 @@ public class Level : Entity
         block.init();
 
         this.activeBlock = block;
+    }
+
+    public void gameOver()
+    {
+        this.currentStatus = GameStatus.GameOver;
+        this.ui.handleGameOver();
     }
 }
