@@ -27,12 +27,12 @@ public class Map : Entity {
             }
         }
 
-        this.mainCam.gameObject.transform.position = new Vector3(0.0f, Level.TILESIZE * (Level.MAPHEIGHT / 2.0f), -10.0f);
+        this.mainCam.gameObject.transform.position = new Vector3(Level.TILESIZE * (Level.MAPWIDTH / 2.0f), Level.TILESIZE * (Level.MAPHEIGHT / 2.0f), -10.0f);
 
         this.floor.transform.position = new Vector3(0.0f, Level.TILESIZE, 0.0f);
         this.floor.transform.localScale = new Vector3(Level.TILESIZE * Level.MAPWIDTH, 1.0f, 1.0f);
 
-        this.background.transform.position = new Vector3(0.0f, Level.MAPHEIGHT / 2.0f, 0.0f);
+        this.background.transform.position = new Vector3(Level.TILESIZE * (Level.MAPWIDTH / 2.0f), Level.MAPHEIGHT / 2.0f, 0.0f);
 	}
 
     public Tile getTileAt(int coorX, int coorY)
@@ -60,7 +60,7 @@ public class Map : Entity {
 	}
 
 	void OnDrawGizmos() {
-		debugDrawMap();
+		//debugDrawMap();
 	}
 
 	void debugDrawMap() {
@@ -82,7 +82,7 @@ public class Map : Entity {
 
 	void OnGUI()
     {
-        debugDrawMapLabels();
+        //debugDrawMapLabels();
     }
 
 	void debugDrawMapLabels() {

@@ -100,7 +100,9 @@ public class Level : Entity
 
     public void spawnBlock(int i)
     {
-        GameObject blockPrefab = (GameObject)Instantiate(this.resources[1]);
+        int randomIndex = Random.Range(2, 6);
+
+        GameObject blockPrefab = (GameObject)Instantiate(this.resources[randomIndex]);
         Block block = blockPrefab.GetComponent<Block>();
 
         this.blocks.Add(block);
