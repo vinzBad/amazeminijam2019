@@ -76,4 +76,26 @@ public class Map : Entity {
 			Debug.DrawLine(start, end);
 		}
 	}
+
+	void OnGUI()
+    {
+        debugDrawMapLabels();
+    }
+
+	void debugDrawMapLabels() {
+		var worldPosition = new Vector3();
+		var screenPosition = new Vector3();
+		var labelDimensions = mainCam.WorldToScreenPoint(new Vector3(Level.TILESIZE, Level.TILESIZE, Level.TILESIZE));
+
+		// always skip the first line for better looks
+		for(int rowIndex = 0; rowIndex < Level.MAPHEIGHT; rowIndex++) {
+			for(int colIndex = 0; colIndex < Level.MAPWIDTH; colIndex++) {
+				worldPosition = new Vector3(colIndex * Level.TILESIZE, rowIndex * Level.TILESIZE, 0);
+				screenPosition = mainCam.WorldToScreenPoint(worldPosition);
+				
+				GUI.Label(new Rect(screenPosition.x, screenPosition.y, labelDimensions.x, labelDimensions.y), this.content[rowIndex, colIndex].State.ToString());
+			}
+		}
+		
+	}
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 public class Level : Entity
 {
     public static int MAPHEIGHT = 10;
-    public static int MAPWIDTH = 3;
+    public static int MAPWIDTH = 6;
 
     public static float BLOCKSMOVELOOPRATE = 1.0f;//In seconds
 
