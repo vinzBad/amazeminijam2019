@@ -2,17 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum TileState
+{
+	FREE,
+	WALKABLE,
+	BLOCKED,
+	GOAL
+}
+
 public class Tile : Entity {
-
-    public enum Type
-    {
-        WALKABLE,
-        FREE,
-        BLOCKED,
-        GOAL
-    }
-
-    public Type currentType = Type.FREE;
+	public TileState State = TileState.FREE;
 
 	// Use this for initialization
 	public override void init(){
