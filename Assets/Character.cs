@@ -116,6 +116,19 @@ public class Character : Entity
         // get current tile
         var current = this.tileAtWorldPos(this.gameObject.transform.position);
 
+         var upperNeighbor = tileAtIndices(current.rowIndex-1, current.colIndex);
+            if (upperNeighbor != null) {
+                if (upperNeighbor.State == TileState.WALKABLE) {
+                    return Vector3.up;
+                }
+            } else {
+                return Vector3.left;
+            }
+        if (currentDirection.y >= 0 ) {
+           if (upperNeighbor.State != TileState.WALKABLE) {
+               return Vector3.left;
+           }
+        }
         // look to the left when we are walking to the left
         if (currentDirection.x <= 0)
         {
