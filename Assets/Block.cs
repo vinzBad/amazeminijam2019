@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Block : Entity {
 
-    public static Vector3 fixOffset = new Vector3(-(Level.MAPWIDTH/2.0f), 0.0f, 0.0f);//Fix for position bug
+    public static Vector3 fixOffset = Vector3.zero; //new Vector3(-(Level.MAPWIDTH/2.0f), 0.0f, 0.0f);//Fix for position bug
 
     public int x = -1;//On height
     public int y = 0;//on width
