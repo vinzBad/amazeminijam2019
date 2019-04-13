@@ -111,6 +111,12 @@ public class Level : Entity
         this.activeBlock = block;
     }
 
+    public void gameWon()
+    {
+        this.currentStatus = GameStatus.GameWon;
+        this.ui.handleGameWon();
+    }
+
     public void gameOver()
     {
         this.currentStatus = GameStatus.GameOver;

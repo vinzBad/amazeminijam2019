@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Block : Entity {
 
+    public Vector3 fixOffset = new Vector3(-(Level.MAPWIDTH/2.0f), 0.0f, 0.0f);//Fix for position bug
+
     public int x = -1;//On height
     public int y = 0;//on width
 
@@ -16,7 +18,7 @@ public class Block : Entity {
 	public override void init(){
         base.init();
 
-        this.gameObject.transform.position = new Vector3(this.y * Level.TILESIZE, (Level.TILESIZE * Level.MAPHEIGHT), 0.0f);
+        this.gameObject.transform.position = new Vector3(this.y * Level.TILESIZE, (Level.TILESIZE * Level.MAPHEIGHT), 0.0f) + fixOffset;
 
         if (!this.started) {
             StartCoroutine(this.updateMove());
@@ -85,7 +87,18 @@ public class Block : Entity {
     {
         this.landed = true;
         this.level.activeBlock = null;
-        this.level.spawnBlock(Random.Range(0, Level.MAPWIDTH));
+        bool canPlaceBlock = false;
+        for (var i = 0; i < Level.MAPWIDTH; i++)
+        {
+            if (this.level.map.content[0, i].State == TileState.FREE)
+            {
+                canPlaceBlock = true;
+                break;
+            }
+        }
+        if (canPlaceBlock) {
+            this.level.spawnBlock(Random.Range(0, Level.MAPWIDTH));
+        }
 
         Tile newTile = this.level.map.getTileAt(this.x, this.y);
         if (newTile != null)
