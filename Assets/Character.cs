@@ -130,8 +130,23 @@ public class Character : Entity
 
         Tile tileUp = this.tileAtWorldPos(this.gameObject.transform.position + Vector3.up * Level.TILESIZE);
         //Debug.Log(tileUp.State);
-        if(tileUp != null && tileUp.State == TileState.WALKABLE)
-        {
+        if(tileUp != null && tileUp.State == TileState.WALKABLE) {
+         /*var upperNeighbor = tileAtIndices(current.rowIndex-1, current.colIndex);
+            if (upperNeighbor != null) {
+                if (upperNeighbor.State == TileState.WALKABLE) {
+                    return Vector3.up;
+                }
+            } else {
+                return Vector3.left;
+            }
+        if (currentDirection.y >= 0 ) {
+           if (upperNeighbor.State != TileState.WALKABLE) {
+               return Vector3.left;
+           }
+        }
+        // look to the left when we are walking to the left
+        if (currentDirection.x <= 0)
+        {*/
             return Vector3.up;
         }
         else {
