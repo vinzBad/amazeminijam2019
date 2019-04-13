@@ -23,6 +23,9 @@ public class Character : Entity
         base.init();
 
         this.gameObject.transform.position = new Vector3(Level.TILESIZE * (Level.MAPWIDTH/2.0f), (Level.TILESIZE * 1.0f), -1.0f) + Block.fixOffset;
+
+        this.setAnimation("idle");
+        StartCoroutine(this.handleAnimation());
     }
 
     // Update is called once per frame
@@ -50,7 +53,7 @@ public class Character : Entity
             case "idle":
                 this.currentAnim = new Sprite[]
                 {
-                    this.sprites[0]
+                    this.sprites[0], this.sprites[1]
                 };
                 break;
             case "goingRight":
@@ -93,7 +96,7 @@ public class Character : Entity
         while (continued)
         {
             this.currentIndex++;
-            if (this.currentIndex > this.currentAnim.Length)
+            if (this.currentIndex >= this.currentAnim.Length)
             {
                 this.currentIndex = 0;
             }
