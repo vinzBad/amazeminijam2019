@@ -36,7 +36,7 @@ public class Level : Entity
         {
             if(Input.GetKeyDown(KeyCode.UpArrow))
             {
-
+                this.activeBlock.rotateLeft();
             }
 
             if (Input.GetKeyUp(KeyCode.DownArrow))
@@ -50,11 +50,11 @@ public class Level : Entity
 
             if (Input.GetKeyDown(KeyCode.LeftArrow))
             {
-                this.activeBlock.rotateLeft();
+                
             }
             else if (Input.GetKeyDown(KeyCode.RightArrow))
             {
-                this.activeBlock.rotateRight();
+                //this.activeBlock.rotateRight();
             }
         }
     }
@@ -66,7 +66,9 @@ public class Level : Entity
 
         this.blocks.Add(block);
 
-        block.x = i;
+        block.y = i;
         block.init();
+
+        this.activeBlock = block;
     }
 }
