@@ -17,7 +17,7 @@ public class UI : Entity
     // Update is called once per frame
     protected override void update()
     {
-        this.timerContent.GetComponent<RectTransform>().anchorMax = new Vector2((this.level.timer/Level.TIMERMAXIMUM), 1.0f);
+        this.timerContent.GetComponent<RectTransform>().anchorMax = new Vector2(1.0f - (this.level.timer/Level.TIMERMAXIMUM), 1.0f);
         this.timerContent.GetComponent<RectTransform>().anchoredPosition = Vector3.zero;
     }
 

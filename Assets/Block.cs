@@ -43,7 +43,7 @@ public class Block : Entity {
     public void moveLeft()
     {
         Tile tileOnLeft = this.level.map.getTileAt(this.x, this.y-1);
-        if (tileOnLeft != null && tileOnLeft.State == TileState.FREE && this.y > 0) {
+        if (tileOnLeft != null && tileOnLeft.State == TileState.FREE && this.y > 1) {
             if (this.currentTile != null)
             {
                 this.currentTile.State = TileState.FREE;
@@ -97,7 +97,7 @@ public class Block : Entity {
             }
         }
         if (canPlaceBlock) {
-            this.level.spawnBlock(Random.Range(0, Level.MAPWIDTH));
+            this.level.spawnBlock(Random.Range(1, Level.MAPWIDTH));
         }
 
         Tile newTile = this.level.map.getTileAt(this.x, this.y);
