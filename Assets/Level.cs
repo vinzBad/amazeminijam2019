@@ -11,6 +11,9 @@ public class Level : Entity
 
     public static float TILESIZE = 1.0f;
 
+    public Object[] resources;
+
+    public Map map;
     public List<Block> blocks = new List<Block>();
     public Block activeBlock;
 
@@ -20,6 +23,10 @@ public class Level : Entity
     public override void init()
     {
         base.init();
+
+        this.map = GameObject.FindObjectOfType<Map>();
+
+        this.spawnBlock(Level.MAPWIDTH / 2);
     }
 
     // Update is called once per frame
@@ -50,5 +57,16 @@ public class Level : Entity
                 this.activeBlock.rotateRight();
             }
         }
+    }
+
+    public void spawnBlock(int i)
+    {
+        GameObject blockPrefab = (GameObject)Instantiate(this.resources[1]);
+        Block block = blockPrefab.GetComponent<Block>();
+
+        this.blocks.Add(block);
+
+        block.x = i;
+        block.init();
     }
 }
