@@ -18,7 +18,7 @@ public class Level : Entity
 
     public static float TILESIZE = 1.0f;
 
-    public static float TIMERMAXIMUM = 30.0f;//In seconds - reach goal before this time length
+    public static float TIMERMAXIMUM = 60.0f;//In seconds - reach goal before this time length
 
     public Object[] resources;
 

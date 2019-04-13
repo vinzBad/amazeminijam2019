@@ -36,10 +36,18 @@ public class Character : Entity
             case GameStatus.Playing:
                 this.currentTile = this.level.map.getTileAt(this.rowIndex, this.colIndex);
                 wander();
-                if (this.currentTile.State == TileState.GOAL)
+                //if (this.currentTile.State == TileState.GOAL)
+                if (this.rowIndex == 1)
                 {
                     this.level.gameWon();
                 }
+
+                Tile tile = this.tileAtWorldPos(this.gameObject.transform.position);
+                this.rowIndex = tile.rowIndex;
+                this.colIndex = tile.colIndex;
+
+                //Debug.Log(this.rowIndex+"/"+this.colIndex);
+                //Debug.Log("state: "+this.currentTile.State);
 
                 this.gameObject.transform.position += this.walkingDirection * 1.0f * Time.deltaTime;
                 break;
@@ -118,55 +126,63 @@ public class Character : Entity
     {
         // get current tile
         var current = this.tileAtWorldPos(this.gameObject.transform.position);
+        //Debug.Log(current);
 
-        // look to the left when we are walking to the left
-        if (currentDirection.x <= 0)
+        Tile tileUp = this.tileAtWorldPos(this.gameObject.transform.position + Vector3.up * Level.TILESIZE);
+        //Debug.Log(tileUp.State);
+        if(tileUp != null && tileUp.State == TileState.WALKABLE)
         {
-			// Debug.Log("Walking to the left");
-            var leftNeighbor = tileAtIndices(current.rowIndex, current.colIndex - 1);
-            if (leftNeighbor != null)
+            return Vector3.up;
+        }
+        else {
+            // look to the left when we are walking to the left
+            if (currentDirection.x <= 0)
             {
-                if (leftNeighbor.State == TileState.WALKABLE || leftNeighbor.State == TileState.GOAL)
+                // Debug.Log("Walking to the left");
+                var leftNeighbor = tileAtIndices(current.rowIndex, current.colIndex - 1);
+                if (leftNeighbor != null)
                 {
-                    return Vector3.left;
-                }
-                else if (leftNeighbor.State == TileState.BLOCKED)
-                {
-                    return Vector3.right;
+                    if (leftNeighbor.State == TileState.WALKABLE || leftNeighbor.State == TileState.GOAL)
+                    {
+                        return Vector3.left;
+                    }
+                    else if (leftNeighbor.State == TileState.BLOCKED)
+                    {
+                        return Vector3.right;
+                    }
+                    else
+                    {
+                        return Vector3.left;
+                    }
                 }
                 else
+                { // we are at the edge of the map
+                    return Vector3.right;
+                }
+            } else {
+                // we are walking to the right 
+                var rightNeighbor = tileAtIndices(current.rowIndex, current.colIndex + 1);
+                if (rightNeighbor != null)
                 {
+                    if (rightNeighbor.State == TileState.WALKABLE || rightNeighbor.State == TileState.GOAL)
+                    {
+                        return Vector3.right;
+                    }
+                    else if (rightNeighbor.State == TileState.BLOCKED)
+                    {
+                        return Vector3.left; // bounce
+                    }
+                    else
+                    {
+                        return Vector3.right;
+                    }
+                }
+                else
+                { // we are at the edge of the map
                     return Vector3.left;
                 }
             }
-            else
-            { // we are at the edge of the map
-                return Vector3.right;
-            }
-        } else {
-			// we are walking to the right 
-			var rightNeighbor = tileAtIndices(current.rowIndex, current.colIndex + 1);
-            if (rightNeighbor != null)
-            {
-                if (rightNeighbor.State == TileState.WALKABLE || rightNeighbor.State == TileState.GOAL)
-                {
-                    return Vector3.right;
-                }
-                else if (rightNeighbor.State == TileState.BLOCKED)
-                {
-                    return Vector3.left; // bounce
-                }
-                else
-                {
-                    return Vector3.right;
-                }
-            }
-            else
-            { // we are at the edge of the map
-                return Vector3.left;
-            }
-		}
-
+        }
     }
 
     Tile tileAtWorldPos(Vector3 pos)

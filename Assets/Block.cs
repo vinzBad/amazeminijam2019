@@ -56,7 +56,7 @@ public class Block : Entity {
             if (newTile != null)
             {
                 this.currentTile = newTile;
-                newTile.State = TileState.BLOCKED;
+                newTile.State = TileState.WALKABLE;
             }
         }
     }
@@ -78,7 +78,7 @@ public class Block : Entity {
             if (newTile != null)
             {
                 this.currentTile = newTile;
-                newTile.State = TileState.BLOCKED;
+                newTile.State = TileState.WALKABLE;
             }
         }
     }
@@ -104,7 +104,7 @@ public class Block : Entity {
         if (newTile != null)
         {
             this.currentTile = newTile;
-            newTile.State = TileState.BLOCKED;
+            newTile.State = TileState.WALKABLE;
         }
     }
 
@@ -129,7 +129,7 @@ public class Block : Entity {
                 Tile newTile = this.level.map.getTileAt(this.x, this.y);
                 if (newTile != null) {
                     this.currentTile = newTile;
-                    newTile.State = TileState.BLOCKED;
+                    newTile.State = TileState.WALKABLE;
                 }
 
                 if (this.x == Level.MAPHEIGHT - 1)
