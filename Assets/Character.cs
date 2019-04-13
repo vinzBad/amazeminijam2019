@@ -11,6 +11,10 @@ public class Character : Entity {
 	
 	// Update is called once per frame
 	protected override void update(){
+		wander();
+	}
+
+	void wander() {
 		
 	}
 }
