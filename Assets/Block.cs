@@ -5,7 +5,7 @@ using UnityEngine;
 public class Block : Entity {
 
     public int x = 0;
-    public int y = Mathf.CeilToInt(Level.MAPHEIGHT);
+    public int y = 0;
 
     public bool landed = false;
 
@@ -13,7 +13,7 @@ public class Block : Entity {
 	public override void init(){
         base.init();
 
-        this.gameObject.transform.position = new Vector3(this.x * Level.TILESIZE, this.y * Level.TILESIZE, 0.0f);
+        this.gameObject.transform.position = new Vector3(this.x * Level.TILESIZE, (Level.TILESIZE * Level.MAPHEIGHT), 0.0f);
 
         StartCoroutine(this.updateMove());
 	}
@@ -35,6 +35,11 @@ public class Block : Entity {
 
     private IEnumerator updateMove()
     {
+        while (this.level.map == null)
+        {
+            yield return new WaitForEndOfFrame();
+        }
+
         bool continued = true;
 
         while (continued)
@@ -42,9 +47,15 @@ public class Block : Entity {
             if (!this.landed)
             {
                 this.gameObject.transform.position += Vector3.down * Level.TILESIZE;
-                this.y--;
+                this.y++;
 
-                if(this.y == 1)
+                if(this.y == Level.MAPHEIGHT - 1)
+                {
+                    this.landed = true;
+                }
+
+                Tile tileBelow = this.level.map.getTileAt(this.x, this.y + 1);
+                if (tileBelow != null && tileBelow.State != TileState.FREE)
                 {
                     this.landed = true;
                 }
