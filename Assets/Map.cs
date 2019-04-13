@@ -82,7 +82,6 @@ public class Map : Entity {
     }
 
 	void debugDrawMapLabels() {
-		GUI.Label(new Rect(10, 10, 100, 20), "Hello World!");
 		var worldPosition = new Vector3();
 		var screenPosition = new Vector3();
 		var labelDimensions = mainCam.WorldToScreenPoint(new Vector3(Level.TILESIZE, Level.TILESIZE, Level.TILESIZE));
